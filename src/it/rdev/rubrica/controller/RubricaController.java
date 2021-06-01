@@ -21,8 +21,6 @@ public class RubricaController {
 	
 	public String addContact(Contact c) {
 		String view = "LIST";
-		// Controlli ore lavorate
-		// Controlli anagrafica
 		// altri controlli
 		try {
 			dao.persist(c);
@@ -33,4 +31,15 @@ public class RubricaController {
 		return view;
 	}
 
+	public String removeContact(Contact c) {
+		String view = "LIST";
+		// altri controlli
+		try {
+			dao.delete(c);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			view = "LIST-ERROR";
+		}
+		return view;
+	}
 }

@@ -11,7 +11,8 @@ import it.rdev.rubrica.model.ContactDAO;
 public class ContactDAOImpl extends AbstractDAO<Contact> implements ContactDAO {
 	
 	private final String TABLE_NAME = "contacts";
-
+	private final String TABLE_NUMBERS = "email";
+	private final String TABLE_EMAILS = "number";
 	public List<Contact> getAll() {
 		List<Contact> contacts = new ArrayList<>();
 		try {
@@ -31,12 +32,36 @@ public class ContactDAOImpl extends AbstractDAO<Contact> implements ContactDAO {
 
 	@Override
 	public boolean persist(Contact o) throws SQLException {
-		return false;
+		try {
+			this.executeInsert("INSERT INTO "+ TABLE_NAME + " VALUES (?,?,?)",
+					o.getId(), o.getName(), o.getSurname() );
+
+		for (int i = 0; i < o.getPhoneNumbers().size(); i++) {
+			this.executeInsert("INSERT INTO "+ TABLE_NUMBERS + " VALUES (?,?)",
+					o.getId(), o.getPhoneNumbers().get(i));
+		}
+
+		for (int i = 0; i < o.getEmails().size(); i++) {
+			this.executeInsert("INSERT INTO "+ TABLE_EMAILS + " VALUES (?,?)",
+					o.getId(), o.getEmails().get(i));
+		}
+		return true;
+		} catch (SQLException e) {
+			return false;
+		}
+
 	}
 
 	@Override
 	public boolean delete(Contact t) throws SQLException {
-		return false;
+		try {
+			this.executeUpdate("DELETE FROM "+ TABLE_NAME +" WHERE id = " + t.getId() );
+			System.out.println("Rimosso");
+			return true;
+		} catch (SQLException e) {
+			System.err.println("ERROR SQL");
+			return false;
+		}
 	}
 
 	@Override
@@ -45,3 +70,4 @@ public class ContactDAOImpl extends AbstractDAO<Contact> implements ContactDAO {
 	}
 
 }
+
