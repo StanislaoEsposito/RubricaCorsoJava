@@ -14,24 +14,32 @@ public class RubricaApp {
 		// leggere(Stream) e scrivere su un file di testo(append)
 		//1 aggiungere numeri di cellulare e email sul db
 		// dal file di configurazione decidere il tipo di persistenza da usare se da file txt o da db
-		List<String> numbers = new ArrayList<String>();
-		numbers.add("3889834556");
+		
+		List<String> phone_numbers = new ArrayList<String>();
+		phone_numbers.add("3889834556");
 		List<String> emails = new ArrayList<String>();
 		emails.add("michele.verdi@libero.it");
 		Contact o1 = new Contact()
-					.setId(3)
-					.setName("Michele")
-					.setSurname("Verdi")
-					.setPhoneNumbers(numbers)
+					.setName("Danilo")
+					.setSurname("Di nuzzo")
+					.setPhoneNumbers(phone_numbers)
 					.setEmails(emails);
-		System.out.println(o1);
+		
+		Contact o2 = new Contact()
+				.setName("Stanislao")
+				.setSurname("Esposito")
+				.setPhoneNumbers(phone_numbers)
+				.setEmails(emails);
+
 		
 		RubricaController rb = new RubricaController();
 		
 		rb.addContact(o1);
+		rb.addContact(o1);
+		rb.addContact(o2);
 		rb.removeContact(o1);
 		
-		new AppFrame().setVisible(true);
+		//new AppFrame().setVisible(true);
 	}
 	
 }
